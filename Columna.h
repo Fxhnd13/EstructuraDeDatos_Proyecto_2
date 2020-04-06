@@ -10,7 +10,7 @@ class Columna{
     string nombre;
     int tipo; 
     Columna *ant, *sig;
-    AVL<TipoDato> *tablaHash;
+    AVL *tablaHash;
 
     public :
 
@@ -36,8 +36,8 @@ class Columna{
         Columna*& getSig();
         void setSig(Columna *&);
 
-        AVL<TipoDato>*& getTablaHash();
-        void setTablaHash(AVL<TipoDato> *&);
+        AVL*& getTablaHash();
+        void setTablaHash(AVL *&);
 
         //Método que ubica el puntero de esta clase tablaHash en la primer posicion
         void primeraPosicionTablaHash();

@@ -4,10 +4,9 @@
 
 using namespace std;
 
-template <class TipoDato>
 class AVL{
 
-    TipoDato dato;
+    Dato dato;
     int fb;
     bool borrado;
     AVL *izq,*der, *ant,*sig;
@@ -31,8 +30,8 @@ class AVL{
         AVL*& getSig();
         void setSig(AVL *&);
 
-        TipoDato getDato();
-        void setDato(TipoDato);
+        Dato getDato();
+        void setDato(Dato);
         
         int getFb();
         void setFb(int);

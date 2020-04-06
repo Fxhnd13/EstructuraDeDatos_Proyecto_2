@@ -4,72 +4,72 @@
 
 using namespace std;
 
-template <class TipoDato>
-AVL<TipoDato>*& AVL<TipoDato>::getIzq(){
+  
+AVL*& AVL::getIzq(){
     return this->izq;
 }
 
-template <class TipoDato>
-void AVL<TipoDato>::setIzq(AVL<TipoDato> *&valor){
+  
+void AVL::setIzq(AVL *&valor){
     this->izq = valor;
 }
         
-template <class TipoDato>
-AVL<TipoDato>*& AVL<TipoDato>::getDer(){
+  
+AVL*& AVL::getDer(){
     return this->der;
 }
 
-template <class TipoDato>
-void AVL<TipoDato>::setDer(AVL<TipoDato> *&valor){
+  
+void AVL::setDer(AVL *&valor){
     this->der = valor;
 }
         
-template <class TipoDato>
-AVL<TipoDato>*& AVL<TipoDato>::getAnt(){
+  
+AVL*& AVL::getAnt(){
     return this->ant;
 }
 
-template <class TipoDato>
-void AVL<TipoDato>::setAnt(AVL<TipoDato> *&valor){
+  
+void AVL::setAnt(AVL *&valor){
     this->ant = valor;
 }
 
-template <class TipoDato>     
-AVL<TipoDato>*& AVL<TipoDato>::getSig(){
+       
+AVL*& AVL::getSig(){
     return this->sig;
 }
 
-template <class TipoDato>
-void AVL<TipoDato>::setSig(AVL<TipoDato> *&valor){
+  
+void AVL::setSig(AVL *&valor){
     this->sig = valor;
 }
 
-template <class TipoDato>
-TipoDato AVL<TipoDato>::getDato(){
+  
+Dato AVL::getDato(){
     return this->dato;
 }
 
-template <class TipoDato>
-void AVL<TipoDato>::setDato(TipoDato dato){
+  
+void AVL::setDato(Dato dato){
     this->dato = dato;
 }
 
-template <class TipoDato> 
-int AVL<TipoDato>::getFb(){
+   
+int AVL::getFb(){
     return this->fb;
 }
 
-template <class TipoDato>
-void AVL<TipoDato>::setFb(int valor){
+  
+void AVL::setFb(int valor){
     this->fb = valor;
 }
 
-template <class TipoDato>
-bool AVL<TipoDato>::getBorrado(){
+  
+bool AVL::getBorrado(){
     return this->borrado;
 }
 
-template <class TipoDato>
-void AVL<TipoDato>::setBorrado(bool valor){
+  
+void AVL::setBorrado(bool valor){
     this->borrado = valor;
 }

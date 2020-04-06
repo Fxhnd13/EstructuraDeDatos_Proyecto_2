@@ -2,52 +2,42 @@
 #include "Columna.h"
 #include <string.h>
 
-template <class TipoDato>
-string Columna<TipoDato>::getNombre(){
+string Columna::getNombre(){
     return this->nombre;
 }
 
-template <class TipoDato>
-void Columna<TipoDato>::setNombre(string valor){
+void Columna::setNombre(string valor){
     this->nombre = valor;
 }
 
-template <class TipoDato>
-int Columna<TipoDato>::getTipo(){
+int Columna::getTipo(){
     return this->tipo;
 }
 
-template <class TipoDato>
-void Columna<TipoDato>::setTipo(int valor){
+void Columna::setTipo(int valor){
     this->tipo = valor;
 }
 
-template <class TipoDato>
-Columna<TipoDato>*& Columna<TipoDato>::getAnt(){
+Columna*& Columna::getAnt(){
     return this->ant;
 }
 
-template <class TipoDato>
-void Columna<TipoDato>::setAnt(Columna<TipoDato> *&valor){
+void Columna::setAnt(Columna *&valor){
     this->ant = valor;
 }
 
-template <class TipoDato>
-Columna<TipoDato>*& Columna<TipoDato>::getSig(){
+Columna*& Columna::getSig(){
     return this->sig;
 }
 
-template <class TipoDato>
-void Columna<TipoDato>::setSig(Columna<TipoDato> *&valor){
+void Columna::setSig(Columna *&valor){
     this->sig = valor;
 }
 
-template <class TipoDato>
-AVL<TipoDato>*& Columna<TipoDato>::getTablaHash(){
+AVL*& Columna::getTablaHash(){
     return this->tablaHash;
 }
 
-template <class TipoDato>
-void Columna<TipoDato>::setTablaHash(AVL<TipoDato> *&valor){
+void Columna::setTablaHash(AVL *&valor){
     this->tablaHash = valor;
 }
