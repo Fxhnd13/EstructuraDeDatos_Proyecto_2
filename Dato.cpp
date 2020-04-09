@@ -16,7 +16,7 @@ float Dato::getDatoFlotante(){
     return this->datoFloat;
 }
 
-string Dato::getDatoString(){
+char* Dato::getDatoString(){
     return this->datoString;
 }
 
@@ -36,6 +36,31 @@ void Dato::setDatoFlotante(float valor){
     this->datoFloat = valor;
 }
 
-void Dato::setDatoString(string valor){
-    this->datoString = valor;
+void Dato::setDatoString(char valor[]){
+    strcpy(this->datoString, valor);
+}
+
+int Dato::getValorNumerico(){
+    int valor = 0;
+    switch(this->tipo){
+        case 1:{
+            valor = this->datoEntero;
+            break;
+        }
+        case 2:{
+            valor = (int) this->datoFloat;
+            break;
+        }
+        case 3:{
+            for (int i = 0; i < strlen(this->getDatoString()); i++){
+                valor += this->datoString[i];
+            }
+            break;
+        }
+        case 4:{
+            valor = this->datoChar;
+            break;
+        }
+    }
+    return valor;
 }

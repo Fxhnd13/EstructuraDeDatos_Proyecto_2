@@ -10,7 +10,7 @@ AVL*& AVL::getIzq(){
 }
 
   
-void AVL::setIzq(AVL *&valor){
+void AVL::setIzq(AVL* valor){
     this->izq = valor;
 }
         
@@ -20,28 +20,8 @@ AVL*& AVL::getDer(){
 }
 
   
-void AVL::setDer(AVL *&valor){
+void AVL::setDer(AVL* valor){
     this->der = valor;
-}
-        
-  
-AVL*& AVL::getAnt(){
-    return this->ant;
-}
-
-  
-void AVL::setAnt(AVL *&valor){
-    this->ant = valor;
-}
-
-       
-AVL*& AVL::getSig(){
-    return this->sig;
-}
-
-  
-void AVL::setSig(AVL *&valor){
-    this->sig = valor;
 }
 
   
@@ -72,4 +52,12 @@ bool AVL::getBorrado(){
   
 void AVL::setBorrado(bool valor){
     this->borrado = valor;
+}
+
+int AVL::getNoRegistro(){
+    return this->noRegistro;
+}
+
+void AVL::setNoRegistro(int valor){
+    this->noRegistro = valor;
 }

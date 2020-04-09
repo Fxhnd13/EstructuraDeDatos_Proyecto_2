@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string.h>
+#include "Utilidades.cpp"
 #include "Dato.cpp"
 
 using namespace std;
@@ -7,9 +8,10 @@ using namespace std;
 class AVL{
 
     Dato dato;
+    int noRegistro;
     int fb;
     bool borrado;
-    AVL *izq,*der, *ant,*sig;
+    AVL *izq,*der;
 
     public :
 
@@ -19,19 +21,16 @@ class AVL{
 
         //Aquí irán todos los métodos restantes
         AVL*& getIzq();
-        void setIzq(AVL *&);
+        void setIzq(AVL * );
         
         AVL*& getDer();
-        void setDer(AVL *&);
-        
-        AVL*& getAnt();
-        void setAnt(AVL *&);
-        
-        AVL*& getSig();
-        void setSig(AVL *&);
-
+        void setDer(AVL * );
+    
         Dato getDato();
         void setDato(Dato);
+        
+        int getNoRegistro();
+        void setNoRegistro(int);
         
         int getFb();
         void setFb(int);

@@ -8,7 +8,7 @@ class Dato{
     int tipo;
     int datoEntero;
     float datoFloat;
-    string datoString;
+    char datoString[300];
     char datoChar;
 
     public : 
@@ -22,11 +22,13 @@ class Dato{
         
         int getDatoEntero();
         float getDatoFlotante();
-        string getDatoString();
+        char* getDatoString();
         char getDatoChar();
 
         void setDatoEntero(int);
         void setDatoFlotante(float);
-        void setDatoString(string);
+        void setDatoString(char*);
         void setDatoChar(char );
+
+        int getValorNumerico();
 };

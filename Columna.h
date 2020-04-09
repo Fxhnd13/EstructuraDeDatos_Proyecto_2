@@ -1,50 +1,62 @@
 #include <iostream>
 #include <string.h>
-#include "AVL.cpp"
+#include "ListAVL.cpp"
 
 using namespace std;
 
-template <class TipoDato>
 class Columna{
 
-    string nombre;
+    char nombre[100];
     int tipo; 
+    int espaciosTotales, espaciosOcupados=0;
     Columna *ant, *sig;
-    AVL *tablaHash;
+    ListAVL *tablaHash;
 
     public :
 
-        Columna(){
-            for (int i = 0; i < 5; i++)
-            {
-
-            }
-        }
+        Columna(){}
 
         ~Columna(){}
 
         //Aquí irán todos los métodos restantes
-        string getNombre();
-        void setNombre(string);
+        char* getNombre();
+        void setNombre(char*);
 
         int getTipo();
         void setTipo(int);
 
         Columna*& getAnt();
-        void setAnt(Columna *&);
+        void setAnt(Columna *);
 
         Columna*& getSig();
-        void setSig(Columna *&);
+        void setSig(Columna * );
 
-        AVL*& getTablaHash();
-        void setTablaHash(AVL *&);
+        ListAVL*& getTablaHash();
+        void setTablaHash(ListAVL * );
 
         //Método que ubica el puntero de esta clase tablaHash en la primer posicion
         void primeraPosicionTablaHash();
 
         //Método para agregar un dato de cualquier tipo a la tabla hash en el indice indicado
-        void agregarDatoEn(int, TipoDato);
+        void agregarDatoEn(int, Dato);
 
         //Método que crea la cantidad de espacios que tendrá la tabla hash
         void agregarEspacios(int);
+
+        void agregarArbol(ListAVL *&);
+
+        void last();
+        void first();
+
+        AVL*& getAt(int);
+
+        void insertar(AVL* &, Dato dato);
+        void insert(Dato dato, bool &, AVL* &);
+
+        void rotarLL(AVL* &);
+        void rotarRR(AVL* &);
+        void rotarLR(AVL* &);
+        void rotarRL(AVL* &);
+
+        int cantidadDeRegistros(AVL*, int &);
 };
