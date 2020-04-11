@@ -32,11 +32,18 @@ class Tabla{
         
         Columna*& getAt(int);
 
-        Tabla*& getByName(char nombre[]);
+        int getByName(char nombre[]);
 
         void first();
 
         void last();
 
         void agregarColumna(Columna* &);
+        int sizeColumnas();
+
+        void mostrarDatos();
+
+        void mostrarDatosPorBusqueda(int, int, Dato);
+
+        void insertar(int, int, Dato);
 };

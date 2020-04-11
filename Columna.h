@@ -11,6 +11,7 @@ class Columna{
     int espaciosTotales, espaciosOcupados=0;
     Columna *ant, *sig;
     ListAVL *tablaHash;
+    ListDatos *listDatos;
 
     public :
 
@@ -34,6 +35,12 @@ class Columna{
         ListAVL*& getTablaHash();
         void setTablaHash(ListAVL * );
 
+        int getEspaciosTotales();
+        void setEspaciosTotales(int );
+
+        int getEspaciosOcupados();
+        void setEspaciosOcupados(int );
+
         //Método que ubica el puntero de esta clase tablaHash en la primer posicion
         void primeraPosicionTablaHash();
 
@@ -42,15 +49,17 @@ class Columna{
 
         //Método que crea la cantidad de espacios que tendrá la tabla hash
         void agregarEspacios(int);
-
+        void limpiarTodo();
+        void limpiarListaDatos();
         void agregarArbol(ListAVL *&);
 
+        void listarDatos();
         void last();
         void first();
 
         AVL*& getAt(int);
 
-        void insertar(AVL* &, Dato dato);
+        void insertar(int, Dato dato);
         void insert(Dato dato, bool &, AVL* &);
 
         void rotarLL(AVL* &);
@@ -58,5 +67,7 @@ class Columna{
         void rotarLR(AVL* &);
         void rotarRL(AVL* &);
 
-        int cantidadDeRegistros(AVL*, int &);
+        void cantidadDeRegistros(int &);
+        void getDatoByNoRegistro(int, Dato &, bool &);
+        void getNoRegistroByDato(int &, Dato);
 };

@@ -4,7 +4,6 @@
 
 using namespace std;
 
-  
 AVL*& AVL::getIzq(){
     return this->izq;
 }
@@ -54,10 +53,42 @@ void AVL::setBorrado(bool valor){
     this->borrado = valor;
 }
 
-int AVL::getNoRegistro(){
-    return this->noRegistro;
+void AVL::getNoRegistroByDato(Dato dato, int &noRegistro){
+    if(this){
+        if(this->getDato().getValorNumerico() == dato.getValorNumerico()){
+            noRegistro = this->getNoRegistro();
+        }else{
+            if(noRegistro == (-1)){
+                if(this->getDato().getValorNumerico() < dato.getValorNumerico()){
+                    if(this->getDer()) this->getDer()->getNoRegistroByDato(dato, noRegistro);
+                }else{
+                    if(this->getIzq()) this->getIzq()->getNoRegistroByDato(dato, noRegistro);
+                }
+            }
+        }
+    }
 }
 
-void AVL::setNoRegistro(int valor){
-    this->noRegistro = valor;
+void AVL::getDatoByNoRegistro(int noRegistro, Dato &dato, bool &encontrado){
+    if(this){
+        if(this->getNoRegistro() == noRegistro){
+            dato = this->getDato();
+            encontrado = true;
+        }else{
+            if(!encontrado){
+                if(this->getDer()) this->getDer()->getDatoByNoRegistro(noRegistro, dato, encontrado);
+                if(!encontrado){
+                    if(this->getIzq()) this->getIzq()->getDatoByNoRegistro(noRegistro, dato, encontrado);
+                }
+            }
+        }
+    }
+}
+
+void AVL::cantidadDeRegistros(int &cantidad){
+    if(this){
+        cantidad++;
+        if(this->getDer()) this->getDer()->cantidadDeRegistros(cantidad);
+        if(this->getIzq()) this->getIzq()->cantidadDeRegistros(cantidad);
+    }
 }

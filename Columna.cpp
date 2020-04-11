@@ -42,12 +42,64 @@ void Columna::setTablaHash(ListAVL* valor){
     this->tablaHash = valor;
 }
 
+int Columna::getEspaciosOcupados(){
+    return this->espaciosOcupados;
+}
+
+int Columna::getEspaciosTotales(){
+    return this->espaciosTotales;
+}
+
+void Columna::setEspaciosOcupados(int valor){
+    this->espaciosOcupados = valor;
+}
+
+void Columna::setEspaciosTotales(int valor){
+    this->espaciosTotales = valor;
+}
+
 void Columna::agregarEspacios(int cantidad){
     this->espaciosTotales = cantidad;
     for (int i = 0; i < cantidad; i++){
         ListAVL *avl = new ListAVL();
         this->agregarArbol(avl);
     }
+}
+
+void Columna::limpiarTodo(){
+    last();
+    while(tablaHash){
+        ListAVL *aux = this->tablaHash;
+        if(aux->getAnt()){
+            this->tablaHash = aux->getAnt();
+            aux->getAnt()->setSig(NULL);
+            aux->setAnt(NULL);
+        }else{
+            this->tablaHash = NULL;
+        }
+        delete aux;
+    }
+}
+
+void Columna::limpiarListaDatos(){
+    while(listDatos && listDatos->getSig()){
+        listDatos = listDatos->getSig();
+    }
+    while(listDatos){
+        ListDatos *aux = this->listDatos;
+        if(aux->getAnt()){
+            this->listDatos = aux->getAnt();
+            aux->getAnt()->setSig(NULL);
+            aux->setAnt(NULL);
+        }else{
+            this->listDatos = NULL;
+        }
+        delete aux;
+    }
+}
+
+void Columna::listarDatos(){
+    
 }
 
 void Columna::agregarArbol(ListAVL* &avl){
@@ -90,7 +142,8 @@ AVL*& Columna::getAt(int indice){
     }
 }
 
-void Columna::insertar(AVL* &arbol, Dato dato){
+void Columna::insertar(int indice, Dato dato){
+    AVL *arbol = this->getAt(indice);
     bool aumento;
     insert(dato, aumento, arbol);
 }
@@ -189,11 +242,36 @@ void Columna::rotarRL(AVL* &arbol){
     rotarRR(arbol);
 }
 
-int Columna::cantidadDeRegistros(AVL* arbol, int &cantidad){
-    if(arbol){
-        cantidad++;
-        cantidadDeRegistros(arbol->getDer(), cantidad);
-        cantidadDeRegistros(arbol->getIzq(), cantidad);
+void Columna::cantidadDeRegistros(int &cantidad){
+    first();
+    if(this->tablaHash) tablaHash->getAVL()->cantidadDeRegistros(cantidad);
+    while(tablaHash->getSig()){
+        tablaHash = tablaHash->getSig();
+        tablaHash->getAVL()->cantidadDeRegistros(cantidad);
     }
-    return cantidad;
+    this->first();
+}
+
+void Columna::getDatoByNoRegistro(int noRegistro, Dato &dato, bool &encontrado){
+    first();
+    if(this->tablaHash){
+        tablaHash->getAVL()->getDatoByNoRegistro(noRegistro, dato, encontrado);
+        while(tablaHash->getSig() && (!encontrado)){
+            tablaHash = tablaHash->getSig();
+            tablaHash->getAVL()->getDatoByNoRegistro(noRegistro, dato, encontrado);
+        }
+    }else{
+        cout<<"No se enconro el dato en la tabla hash."<<endl;
+    }
+}
+
+void Columna::getNoRegistroByDato(int &noRegistro, Dato dato){
+    first();
+    if(this->tablaHash){
+        tablaHash->getAVL()->getNoRegistroByDato(dato, noRegistro);
+        while(tablaHash->getSig() && (noRegistro==(-1))){
+            tablaHash = tablaHash->getSig();
+            tablaHash->getAVL()->getNoRegistroByDato(dato, noRegistro);
+        }
+    }
 }

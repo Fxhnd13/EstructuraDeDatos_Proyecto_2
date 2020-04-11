@@ -1,14 +1,12 @@
 #include <iostream>
 #include <string.h>
-#include "Utilidades.cpp"
-#include "Dato.cpp"
+#include "ListDatos.cpp"
 
 using namespace std;
 
 class AVL{
 
     Dato dato;
-    int noRegistro;
     int fb;
     bool borrado;
     AVL *izq,*der;
@@ -29,13 +27,15 @@ class AVL{
         Dato getDato();
         void setDato(Dato);
         
-        int getNoRegistro();
-        void setNoRegistro(int);
-        
         int getFb();
         void setFb(int);
 
         bool getBorrado();
         void setBorrado(bool);
 
+        void getNoRegistroByDato(Dato ,int &);
+
+        void getDatoByNoRegistro(int , Dato &, bool &);
+
+        void cantidadDeRegistros(int &);
 };

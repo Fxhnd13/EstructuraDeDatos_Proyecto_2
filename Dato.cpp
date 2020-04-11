@@ -8,6 +8,10 @@ int Dato::getTipoDato(){
     return this->tipo;
 }
 
+void Dato::setTipoDato(int valor){
+    this->tipo = valor;
+}
+
 int Dato::getDatoEntero(){
     return this->datoEntero;
 }
@@ -64,3 +68,40 @@ int Dato::getValorNumerico(){
     }
     return valor;
 }
+
+void Dato::escribirDato(){
+    switch(this->tipo){
+        case 1:{
+            cout<< this->datoEntero;
+            break;
+        }
+        case 2:{
+            cout<< this->datoFloat;
+            break;
+        }
+        case 3:{
+            cout<< this->datoString;
+            break;
+        }
+        case 4:{
+            cout<< this->datoChar;
+            break;
+        }
+    }
+}
+
+int Dato::funcionHash(int cantidadEspacios){
+    int indice = 0;
+    indice = this->getValorNumerico() % cantidadEspacios;
+    return indice;    
+}
+
+
+int Dato::getNoRegistro(){
+    return this->noRegistro;
+}
+
+void Dato::setNoRegistro(int valor){
+    this->noRegistro = valor;
+}
+        
