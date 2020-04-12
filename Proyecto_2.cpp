@@ -183,6 +183,17 @@ void insertarDatos(){
 }
 
 void verGrafico(){
+    int noEstructura = 0;
+    int noEstructuraPadre = 0;
+    string cadena = "digraph G {"
+                   +"\n     nodesep=.1;"
+                   +"\n     rankdir=LR;"
+                   +"\n     node"+noEstructuraPadre+" [label=\"Guatemala's Database\", shape=record, height=.1];";
+    noEstructura++;
+    for (int i = 0; i < sizeTablas(); i++){
+        getAt(i)->escribirEstructura(cadena, noEstructura, noEstructuraPadre);
+    }
+    cadena += "\n}";
     
 }
 
@@ -256,4 +267,16 @@ void agregarTabla(Tabla *&Tabla){
         tablas->setSig(Tabla);
         tablas = Tabla;
     }
+}
+
+void sizeTablas(){
+    int cantidad = 0;
+    first();
+    Tabla *aux = tablas;
+    if(aux) cantidad++;
+    while(aux && aux->getSig()){
+        cantidad++;
+        aux = aux->getSig();
+    }
+    return cantidad;
 }

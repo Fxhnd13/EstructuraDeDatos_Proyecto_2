@@ -83,7 +83,7 @@ using namespace std;
         }else{
             for (int i = 0; i < indice; i++){
                 if(this->columnas->getSig()){
-                    this->columnas = columnas->getSig();
+                    this->columnas = this->columnas->getSig();
                 }
             }
             return this->columnas;
@@ -170,5 +170,15 @@ using namespace std;
                 //hay que limpiar la lista de datos que tenemos y proceder con la siguiente columna
                 this->getAt(i)->limpiarListaDatos();
             }
+        }
+    }
+
+    void Tabla::escribirEstructura(string &cadena, int &noEstructura, int noEstructuraPadre){
+        cadena += "\n     node"+noEstructuraPadre+" -> node"+noEstructura+";";
+        cadena += "\n     node"+noEstructura+" [label=\""+this->getNombre()+"\", shape=record, height.1];";
+        noEstructuraPadre = noEstructura;
+        noEstructura++;
+        for (int i = 0; i < this->sizeColumnas(); i++){
+            this->getAt(i)->escribirEstructura(cadena, noEstructura, noEstructuraPadre);
         }
     }

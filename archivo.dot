@@ -1,5 +1,5 @@
 digraph G {
-	nodesep=.05;
+	nodesep=.1;
 	rankdir=LR;
 	
 	nodeDataBase [label="Guatemala's Database", shape=record, height=.1];
@@ -37,12 +37,9 @@ digraph G {
 	node3:col1_0 -> padre;
 	node3:col1_1 -> padre2;
 	node3:col1_2 -> padre3;
+
 	padre -> hijo;
-	padre -> hija;
-	hijo -> hijo2;
-	padre2 -> hijo3;
-	padre2 -> hijo5;
-	padre3 -> hijo4;
+	hijo [label="asdfasdfasdfsd"];
 	
 
 

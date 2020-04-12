@@ -55,4 +55,7 @@ class Tabla{
 
         //Inserta el dato en la columna correspondiente
         void insertar(int, Dato);
+
+        //Escribre en una cadena la estructura correspondiente de la tabla
+        void escribirEstructura(string&, int&, int);
 };

@@ -44,6 +44,31 @@ void Dato::setDatoString(char valor[]){
     strcpy(this->datoString, valor);
 }
 
+void Dato::getCadenaDato(){
+    string valor;
+    switch(this->tipo){
+        case 1:{
+            valor = this->datoEntero;
+            break;
+        }
+        case 2:{
+            valor = this->datoFloat;
+            break;
+        }
+        case 3:{
+            for (int i = 0; i < strlen(this->getDatoString()); i++){
+                valor += this->datoString[i];
+            }
+            break;
+        }
+        case 4:{
+            valor = this->datoChar;
+            break;
+        }
+    }
+    return valor;
+}
+
 int Dato::getValorNumerico(){
     int valor = 0;
     switch(this->tipo){

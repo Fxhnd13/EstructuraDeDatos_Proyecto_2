@@ -94,4 +94,7 @@ class Columna{
 
         //metodo que nos retorna el numero de registro de un dato 
         void getNoRegistroByDato(int &, Dato);
+
+        //metodo para escribir en una cadena la estructura de la columna
+        void escribirEstructura(string &, int &, int);
 };

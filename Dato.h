@@ -22,6 +22,7 @@ class Dato{
         int getTipoDato();
         void setTipoDato(int);
         
+        string getCadenaDato();
         int getDatoEntero();
         float getDatoFlotante();
         char* getDatoString();

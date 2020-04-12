@@ -50,4 +50,6 @@ class AVL{
 
         //agrega el dato enviado de parametro a la lista enviada de parametro
         void agregarDato(ListDatos* &, Dato);
+
+        void escribirEstructura(string &, int&, int);
 };

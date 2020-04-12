@@ -85,8 +85,8 @@ void Columna::limpiarTodo(){
 }
 
 void Columna::limpiarListaDatos(){
-    while(listDatos && listDatos->getSig()){
-        listDatos = listDatos->getSig();
+    while(this->listDatos && this->listDatos->getSig()){
+        this->listDatos = this->listDatos->getSig();
     }
     while(listDatos){
         ListDatos *aux = this->listDatos;
@@ -209,22 +209,22 @@ void Columna::rotarRL(AVL* &arbol){
 }
 
 void Columna::cantidadDeRegistros(int &cantidad){
-    first();
-    if(this->tablaHash) tablaHash->getAVL()->cantidadDeRegistros(cantidad);
+    this->first();
+    if(this->tablaHash) this->tablaHash->getAVL()->cantidadDeRegistros(cantidad);
     while(tablaHash->getSig()){
-        tablaHash = tablaHash->getSig();
-        tablaHash->getAVL()->cantidadDeRegistros(cantidad);
+        this->tablaHash = this->tablaHash->getSig();
+        this->tablaHash->getAVL()->cantidadDeRegistros(cantidad);
     }
-    first();
+    this->first();
 }
 
 void Columna::getDatoByNoRegistro(int noRegistro, Dato &dato, bool &encontrado){
-    first();
+    this->first();
     if(this->tablaHash){
-        tablaHash->getAVL()->getDatoByNoRegistro(noRegistro, dato, encontrado);
+        this->tablaHash->getAVL()->getDatoByNoRegistro(noRegistro, dato, encontrado);
         while(tablaHash->getSig() && (!encontrado)){
-            tablaHash = tablaHash->getSig();
-            tablaHash->getAVL()->getDatoByNoRegistro(noRegistro, dato, encontrado);
+            this->tablaHash = this->tablaHash->getSig();
+            this->tablaHash->getAVL()->getDatoByNoRegistro(noRegistro, dato, encontrado);
         }
     }else{
         cout<<"No se enconro el dato en la tabla hash."<<endl;
@@ -267,7 +267,7 @@ void Columna::first(){
 }
 
 AVL*& Columna::getAt(int indice){
-    first();
+    this->first();
     if(indice==0){
         return this->tablaHash->getAVL();
     }else{
@@ -281,8 +281,8 @@ AVL*& Columna::getAt(int indice){
 }
 
 Dato Columna::getDatoAt(int indice){
-    while(listDatos && listDatos->getAnt()){
-        listDatos = listDatos->getAnt();
+    while(this->listDatos && this->listDatos->getAnt()){
+        this->listDatos = listDatos->getAnt();
     }
     if(indice==0){
         return this->listDatos->getDato();
@@ -298,8 +298,30 @@ Dato Columna::getDatoAt(int indice){
 
     int Columna::sizeListaDatos(){
         int cantidad = 0;
-        first();
+        this->first();
         ListDatos* aux = this->listDatos;
+        if(aux) cantidad++;
+        while(aux && aux->getSig()){
+            cantidad++;
+            aux = aux->getSig();
+        }
+        return cantidad;
+    }
+
+    void Columna::escribirEstructura(string cadena, int noEstructura, int noEstructuraPadre){
+        cadena += "\n     node"+noEstructuraPadre+" -> node"+noEstructura+";";
+        cadena += "\n     node"+noEstructura+" [label=\""+this->getNombre()+"\", shape=record, height.1];";
+        noEstructuraPadre = noEstructura;
+        noEstructura++;
+        for (int i = 0; i < this->sizeArboles(); i++){
+            this->getAt(i)->escribirEstructura(cadena, noEstructura, noEstructuraPadre);
+        }
+    }
+
+    void Columna::sizeArboles(){
+        int cantidad = 0;
+        this->first();
+        ListAVL* aux = this->tablaHash;
         if(aux) cantidad++;
         while(aux && aux->getSig()){
             cantidad++;

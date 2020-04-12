@@ -125,3 +125,12 @@ void AVL::agregarDato(ListDatos* &listDatos, Dato dato){
         listDatos = nuevoDato;
     }
 }
+
+void AVL::escribirEstructura(string &cadena, int &noEstructura, int noEstructuraPadre){
+    cadena += "\n     node"+noEstructuraPadre+" -> node"+noEstructura+";";
+    cadena += "\n     node"+noEstructura+" [label=\""+this->getDato().getCadenaDato()+"\"];";
+    noEstructuraPadre = noEstructura;
+    noEstructura++;
+    if(this->getDer()) this->getDer()->escribirEstructura(cadena, noEstructura, noEstructuraPadre);
+    if(this->getIzq()) this->getIzq()->escribirEstructura(cadena, noEstructura, noEstructuraPadre);
+}
