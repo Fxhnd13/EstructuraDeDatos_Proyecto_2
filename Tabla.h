@@ -58,4 +58,8 @@ class Tabla{
 
         //Escribre en una cadena la estructura correspondiente de la tabla
         void escribirEstructura(string&, int&, int);
+
+        int sizeListNoRegistro(ListNoRegistro *listNoRegistro);
+    
+        int getAtListNoRegistro(ListNoRegistro*, int indice);
 };

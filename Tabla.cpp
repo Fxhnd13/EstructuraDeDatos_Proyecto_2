@@ -129,20 +129,53 @@ using namespace std;
 
     void Tabla::mostrarDatosPorBusqueda(int columna, Dato dato){
         if(this->getAt(columna)){
-            int noRegistro = -1;
-            this->getAt(columna)->getNoRegistroByDato(noRegistro, dato);
-            if(noRegistro = (-1)){
+            ListNoRegistro *listNoRegistro = new ListNoRegistro();
+            this->getAt(columna)->getListNoRegistroByDato(listNoRegistro, dato);
+            if(sizeListNoRegistro(listNoRegistro)==0){
                 cout<<"No hay registros en la tabla con el dato ingresado"<<endl;
             }else{
-                for (int j = 0; j < this->sizeColumnas(); j++){
-                    Dato aux;  
-                    bool encontrado = false;
-                    this->getAt(j)->getDatoByNoRegistro(noRegistro, aux, encontrado);
-                    cout<<this->getAt(j)->getNombre()<<": ";
-                    aux.escribirDato();
-                    if((j+1) < this->sizeColumnas())cout<<"---";
+                for (int i = 0; i < sizeListNoRegistro(listNoRegistro); i++){
+                    for (int j = 0; j < this->sizeColumnas(); j++){
+                        Dato aux;  
+                        bool encontrado = false;
+                        this->getAt(j)->getDatoByNoRegistro(getAtListNoRegistro(listNoRegistro, i), aux, encontrado);
+                        cout<<this->getAt(j)->getNombre()<<": ";
+                        aux.escribirDato();
+                        if((j+1) < this->sizeColumnas())cout<<"---";
+                    }
+                }
+                
+            }
+        }
+    }
+
+    int Tabla::sizeListNoRegistro(ListNoRegistro *listNoRegistro){
+        int cantidad = 0;
+        while(listNoRegistro && listNoRegistro->getAnt()){
+            listNoRegistro = listNoRegistro->getAnt();
+        }
+        ListNoRegistro *aux = listNoRegistro;
+        if(aux) cantidad++;
+        while(aux && aux->getSig()){
+            cantidad++;
+            aux = aux->getSig();
+        }
+        return cantidad;
+    }
+
+    int Tabla::getAtListNoRegistro(ListNoRegistro* listNoRegistro, int indice){
+        while(listNoRegistro && listNoRegistro->getAnt()){
+            listNoRegistro = listNoRegistro->getAnt();
+        }
+        if(indice==0){
+            return listNoRegistro->getNoRegistro();
+        }else{
+            for (int i = 0; i < indice; i++){
+                if(listNoRegistro->getSig()){
+                    listNoRegistro = listNoRegistro->getSig();
                 }
             }
+            return listNoRegistro->getNoRegistro();
         }
     }
 
@@ -174,8 +207,8 @@ using namespace std;
     }
 
     void Tabla::escribirEstructura(string &cadena, int &noEstructura, int noEstructuraPadre){
-        cadena += "\n     node"+noEstructuraPadre+" -> node"+noEstructura+";";
-        cadena += "\n     node"+noEstructura+" [label=\""+this->getNombre()+"\", shape=record, height.1];";
+        cadena += "\n     node"+to_string(noEstructuraPadre)+" -> node"+to_string(noEstructura)+";";
+        cadena += "\n     node"+to_string(noEstructura)+" [label=\""+this->getNombre()+"\", shape=record, height.1];";
         noEstructuraPadre = noEstructura;
         noEstructura++;
         for (int i = 0; i < this->sizeColumnas(); i++){

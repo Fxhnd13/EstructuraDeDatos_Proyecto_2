@@ -44,7 +44,7 @@ void Dato::setDatoString(char valor[]){
     strcpy(this->datoString, valor);
 }
 
-void Dato::getCadenaDato(){
+string Dato::getCadenaDato(){
     string valor;
     switch(this->tipo){
         case 1:{

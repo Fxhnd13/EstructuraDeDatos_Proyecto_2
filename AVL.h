@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include "ListDatos.cpp"
+#include "ListNoRegistro.cpp"
 
 using namespace std;
 
@@ -52,4 +53,8 @@ class AVL{
         void agregarDato(ListDatos* &, Dato);
 
         void escribirEstructura(string &, int&, int);
+        
+        void getListNoRegistroByDato(ListNoRegistro*&, Dato);
+
+        void agregarNoRegistro(ListNoRegistro*&, int);
 };

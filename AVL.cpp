@@ -53,6 +53,16 @@ void AVL::setBorrado(bool valor){
     this->borrado = valor;
 }
 
+void AVL::getListNoRegistroByDato(ListNoRegistro* &listNoRegistro, Dato dato){
+    if(this){
+        if(this->getDato().getValorNumerico() == dato.getValorNumerico()){
+            agregarNoRegistro(listNoRegistro, this->getDato().getNoRegistro());
+        }
+        if(this->getDer()) this->getDer()->getListNoRegistroByDato(listNoRegistro, dato);
+        if(this->getIzq()) this->getIzq()->getListNoRegistroByDato(listNoRegistro, dato);
+    }
+}
+
 void AVL::getNoRegistroByDato(Dato dato, int &noRegistro){
     if(this){
         if(this->getDato().getValorNumerico() == dato.getValorNumerico()){
@@ -109,6 +119,20 @@ void AVL::listarDatos(ListDatos* &listDatos){
     }
 }
 
+void AVL::agregarNoRegistro(ListNoRegistro*& listNoRegistro, int noRegistro){
+    ListNoRegistro *nuevoRegistro = new ListNoRegistro();
+    if(listNoRegistro==NULL){
+        nuevoRegistro->setAnt(NULL);
+        nuevoRegistro->setSig(NULL);
+        listNoRegistro = nuevoRegistro;
+    }else{
+        nuevoRegistro->setSig(NULL);
+        nuevoRegistro->setAnt(listNoRegistro);
+        listNoRegistro->setSig(nuevoRegistro);
+        listNoRegistro = nuevoRegistro;
+    }
+}
+
 void AVL::agregarDato(ListDatos* &listDatos, Dato dato){
     while(listDatos && listDatos->getSig()){
         listDatos = listDatos->getSig();
@@ -127,8 +151,8 @@ void AVL::agregarDato(ListDatos* &listDatos, Dato dato){
 }
 
 void AVL::escribirEstructura(string &cadena, int &noEstructura, int noEstructuraPadre){
-    cadena += "\n     node"+noEstructuraPadre+" -> node"+noEstructura+";";
-    cadena += "\n     node"+noEstructura+" [label=\""+this->getDato().getCadenaDato()+"\"];";
+    cadena += "\n     node"+to_string(noEstructuraPadre)+" -> node"+to_string(noEstructura)+";";
+    cadena += "\n     node"+to_string(noEstructura)+" [label=\""+this->getDato().getCadenaDato()+"\"];";
     noEstructuraPadre = noEstructura;
     noEstructura++;
     if(this->getDer()) this->getDer()->escribirEstructura(cadena, noEstructura, noEstructuraPadre);

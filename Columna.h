@@ -97,4 +97,8 @@ class Columna{
 
         //metodo para escribir en una cadena la estructura de la columna
         void escribirEstructura(string &, int &, int);
+
+        void getListNoRegistroByDato(ListNoRegistro*&, Dato);
+
+        int sizeArboles();
 };

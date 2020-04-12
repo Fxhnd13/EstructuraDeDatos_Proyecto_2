@@ -231,6 +231,15 @@ void Columna::getDatoByNoRegistro(int noRegistro, Dato &dato, bool &encontrado){
     }
 }
 
+void Columna::getListNoRegistroByDato(ListNoRegistro* &listNoRegistro, Dato dato){
+    int indice = dato.funcionHash(this->espaciosTotales);
+    if(this->tablaHash){
+        if(this->getAt(indice)){
+            this->getAt(indice)->getListNoRegistroByDato(listNoRegistro, dato);
+        }
+    }
+}
+
 void Columna::getNoRegistroByDato(int &noRegistro, Dato dato){
     int indice = dato.funcionHash(this->espaciosTotales);
     if(this->tablaHash){
@@ -308,9 +317,9 @@ Dato Columna::getDatoAt(int indice){
         return cantidad;
     }
 
-    void Columna::escribirEstructura(string cadena, int noEstructura, int noEstructuraPadre){
-        cadena += "\n     node"+noEstructuraPadre+" -> node"+noEstructura+";";
-        cadena += "\n     node"+noEstructura+" [label=\""+this->getNombre()+"\", shape=record, height.1];";
+    void Columna::escribirEstructura(string &cadena, int &noEstructura, int noEstructuraPadre){
+        cadena += "\n     node"+to_string(noEstructuraPadre)+" -> node"+to_string(noEstructura)+";";
+        cadena += "\n     node"+to_string(noEstructura)+" [label=\""+this->getNombre()+"\", shape=record, height.1];";
         noEstructuraPadre = noEstructura;
         noEstructura++;
         for (int i = 0; i < this->sizeArboles(); i++){
@@ -318,7 +327,7 @@ Dato Columna::getDatoAt(int indice){
         }
     }
 
-    void Columna::sizeArboles(){
+    int Columna::sizeArboles(){
         int cantidad = 0;
         this->first();
         ListAVL* aux = this->tablaHash;
