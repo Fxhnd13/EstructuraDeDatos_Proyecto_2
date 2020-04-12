@@ -30,20 +30,23 @@ class Tabla{
         char* getNombre();
         void setNombre(char[]);
         
+        //Retorna la columna en el indice indicado
         Columna*& getAt(int);
 
+        //Retorna el indice de la columan con el nombre indicado
         int getByName(char nombre[]);
 
         void first();
-
         void last();
-
         void agregarColumna(Columna* &);
+
+        //Retorna la cantidad de columnas que posee la tabla
         int sizeColumnas();
 
+        //Metodos para mostrar los datos
         void mostrarDatos();
-
         void mostrarDatosPorBusqueda(int, int, Dato);
 
-        void insertar(int, int, Dato);
+        //Inserta el dato en la columna correspondiente
+        void insertar(int, Dato);
 };

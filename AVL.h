@@ -38,4 +38,9 @@ class AVL{
         void getDatoByNoRegistro(int , Dato &, bool &);
 
         void cantidadDeRegistros(int &);
+
+        void limpiarDatos();
+
+        void listarDatos(ListDatos* &);
+        void agregarDato(ListDatos* &, Dato);
 };

@@ -131,6 +131,7 @@ void insertarDatos(){
                 case 3:{
                     char valor[300];
                     cin.getline(valor, 300, '\n');
+                    cin.getline(valor, 300, '\n');
                     dato.setDatoString(valor);
                     dato.setTipoDato(3);
                     break;
@@ -144,11 +145,9 @@ void insertarDatos(){
                 }
             }
             int noRegistro = 0;
-            noRegistro = tabla->getAt(i)->getEspaciosOcupados();
-            noRegistro++;
+            noRegistro = (tabla->getAt(i)->getEspaciosOcupados()) + 1;
             dato.setNoRegistro(noRegistro);
-            int indice = dato.funcionHash(tabla->getAt(i)->getEspaciosTotales());
-            tabla->insertar(indice, i, dato);
+            tabla->insertar(i, dato);
         }
     }
 }

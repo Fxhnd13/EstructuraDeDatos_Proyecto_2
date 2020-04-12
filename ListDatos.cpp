@@ -6,7 +6,7 @@ using namespace std;
 
 class ListDatos{
     Dato dato;
-    Dato *sig, *ant;
+    ListDatos *sig, *ant;
 
     public:
 
@@ -14,11 +14,11 @@ class ListDatos{
 
         ~ListDatos(){}
 
-        Dato getDato();
+        Dato& getDato();
         void setDato(Dato);
 
-        Dato*& getSig();
-        Dato*& getAnt();
+        ListDatos*& getSig();
+        ListDatos*& getAnt();
         void setSig(ListDatos*);
         void setAnt(ListDatos*);
 };
@@ -27,11 +27,11 @@ Dato& ListDatos::getDato(){
     return this->dato;
 }
 
-Dato*& ListDatos::getSig(){
+ListDatos*& ListDatos::getSig(){
     return this->sig;
 }
 
-Dato*& ListDatos::getAnt(){
+ListDatos*& ListDatos::getAnt(){
     return this->ant;
 }
 

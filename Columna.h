@@ -41,12 +41,6 @@ class Columna{
         int getEspaciosOcupados();
         void setEspaciosOcupados(int );
 
-        //Método que ubica el puntero de esta clase tablaHash en la primer posicion
-        void primeraPosicionTablaHash();
-
-        //Método para agregar un dato de cualquier tipo a la tabla hash en el indice indicado
-        void agregarDatoEn(int, Dato);
-
         //Método que crea la cantidad de espacios que tendrá la tabla hash
         void agregarEspacios(int);
         void limpiarTodo();
@@ -59,7 +53,7 @@ class Columna{
 
         AVL*& getAt(int);
 
-        void insertar(int, Dato dato);
+        void insertar(Dato dato);
         void insert(Dato dato, bool &, AVL* &);
 
         void rotarLL(AVL* &);
@@ -68,6 +62,9 @@ class Columna{
         void rotarRL(AVL* &);
 
         void cantidadDeRegistros(int &);
+        Dato getDatoAt(int);
+
+        int sizeListaDatos();
         void getDatoByNoRegistro(int, Dato &, bool &);
         void getNoRegistroByDato(int &, Dato);
 };

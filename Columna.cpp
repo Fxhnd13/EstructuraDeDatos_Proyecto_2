@@ -71,6 +71,9 @@ void Columna::limpiarTodo(){
     while(tablaHash){
         ListAVL *aux = this->tablaHash;
         if(aux->getAnt()){
+            if(this->tablaHash->getAVL()){
+                this->tablaHash->getAVL()->limpiarDatos();
+            }
             this->tablaHash = aux->getAnt();
             aux->getAnt()->setSig(NULL);
             aux->setAnt(NULL);
@@ -99,50 +102,13 @@ void Columna::limpiarListaDatos(){
 }
 
 void Columna::listarDatos(){
-    
-}
-
-void Columna::agregarArbol(ListAVL* &avl){
-    last();
-    if(this->tablaHash==NULL){
-        avl->setSig(NULL);
-        avl->setAnt(NULL);
-        this->tablaHash = avl;
-    }else{
-        avl->setSig(NULL);
-        avl->setAnt(this->tablaHash);
-        this->tablaHash->setSig(avl);
-        this->tablaHash = avl;
+    for (int i = 0; i < this->espaciosTotales; i++){
+        this->getAt(i)->listarDatos(this->listDatos);
     }
 }
 
-void Columna::last(){
-    if(this->tablaHash && this->tablaHash->getSig()){
-        this->tablaHash = this->tablaHash->getSig();
-    }
-}
-
-void Columna::first(){
-    if(this->tablaHash && this->tablaHash->getAnt()){
-        this->tablaHash = this->tablaHash->getAnt();
-    }
-}
-
-AVL*& Columna::getAt(int indice){
-    first();
-    if(indice==0){
-        return this->tablaHash->getAVL();
-    }else{
-        for (int i = 0; i < indice; i++){
-            if(this->tablaHash->getSig()){
-                this->tablaHash = this->tablaHash->getSig();
-            }
-        }
-        return this->tablaHash->getAVL();
-    }
-}
-
-void Columna::insertar(int indice, Dato dato){
+void Columna::insertar(Dato dato){
+    int indice = dato.funcionHash(this->espaciosTotales);
     AVL *arbol = this->getAt(indice);
     bool aumento;
     insert(dato, aumento, arbol);
@@ -249,7 +215,7 @@ void Columna::cantidadDeRegistros(int &cantidad){
         tablaHash = tablaHash->getSig();
         tablaHash->getAVL()->cantidadDeRegistros(cantidad);
     }
-    this->first();
+    first();
 }
 
 void Columna::getDatoByNoRegistro(int noRegistro, Dato &dato, bool &encontrado){
@@ -275,3 +241,71 @@ void Columna::getNoRegistroByDato(int &noRegistro, Dato dato){
         }
     }
 }
+
+void Columna::agregarArbol(ListAVL* &avl){
+    last();
+    if(this->tablaHash==NULL){
+        avl->setSig(NULL);
+        avl->setAnt(NULL);
+        this->tablaHash = avl;
+    }else{
+        avl->setSig(NULL);
+        avl->setAnt(this->tablaHash);
+        this->tablaHash->setSig(avl);
+        this->tablaHash = avl;
+    }
+}
+
+void Columna::last(){
+    if(this->tablaHash && this->tablaHash->getSig()){
+        this->tablaHash = this->tablaHash->getSig();
+    }
+}
+
+void Columna::first(){
+    if(this->tablaHash && this->tablaHash->getAnt()){
+        this->tablaHash = this->tablaHash->getAnt();
+    }
+}
+
+AVL*& Columna::getAt(int indice){
+    first();
+    if(indice==0){
+        return this->tablaHash->getAVL();
+    }else{
+        for (int i = 0; i < indice; i++){
+            if(this->tablaHash->getSig()){
+                this->tablaHash = this->tablaHash->getSig();
+            }
+        }
+        return this->tablaHash->getAVL();
+    }
+}
+
+Dato Columna::getDatoAt(int indice){
+    while(listDatos && listDatos->getAnt()){
+        listDatos = listDatos->getAnt();
+    }
+    if(indice==0){
+        return this->listDatos->getDato();
+    }else{
+        for (int i = 0; i < indice; i++){
+            if(this->listDatos->getSig()){
+                this->listDatos = this->listDatos->getSig();
+            }
+        }
+        return this->listDatos->getDato();
+    }
+}
+
+    int Columna::sizeListaDatos(){
+        int cantidad = 0;
+        first();
+        ListDatos* aux = this->listDatos;
+        if(aux) cantidad++;
+        while(aux && aux->getSig()){
+            cantidad++;
+            aux = aux->getSig();
+        }
+        return cantidad;
+    }

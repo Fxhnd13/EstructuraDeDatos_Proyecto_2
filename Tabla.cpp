@@ -49,7 +49,6 @@ using namespace std;
     }
 
     void Tabla::agregarColumna(Columna * &columna){
-        columna->setTipo(tipo);
         cout<<"Ingrese el nombre que desea tenga la columna: "<<endl;
         char nombre[100];
         cin.getline(nombre, 100, '\n');
@@ -62,6 +61,7 @@ using namespace std;
         cout<<"4) Char"<<endl;
         int tipo;
         cin>>tipo;
+        columna->setTipo(tipo);
         columna->agregarEspacios(5);
         last();
         if(this->columnas==NULL){
@@ -177,15 +177,29 @@ using namespace std;
         }
     }
 
-    void Tabla::insertar(int indice, int columna, Dato dato){
-        this->getAt(columna)->insertar(indice, dato);
+    void Tabla::insertar(int columna, Dato dato){
+        //Insertamos el dato en la columna correspondiente
+        this->getAt(columna)->insertar(dato);
+        //Cambiamos la cantidad de espacios ocupados que hay en la columna
         this->getAt(columna)->setEspaciosOcupados(this->getAt(columna)->getEspaciosOcupados()+1);
+        //Evaluamos si se supero el factor de datos en la tabla
         float factor = this->getAt(columna)->getEspaciosOcupados()/ this->getAt(columna)->getEspaciosTotales();
-        if(factor>0.6){
-            //estamos en una tabla
+        //de haberse superado
+        if(factor > 0.6){
             //por cada columna hay que hacer un listado de los datos que hay ahí
-            //hay que limpiar la lista de avl de la columna, y agregar la nueva cantidad de espacios
-            //Por cada dato que haya en la lista tenemos que insertarlo en la nueva columna con su nueva tabla hash
-            //hay que limpiar la lista de datos que tenemos y proceder con la siguiente columna
+            for (int i = 0; i < this->sizeColumnas(); i++){
+                //duplicaremos la cantidad de espacios para mejorar el rendimiento
+                int cantidad = 2 * this->getAt(i)->getEspaciosTotales();
+                //listamos los datos y limpiamos la lista de avl de la columna, y agregar la nueva cantidad de espacios
+                this->getAt(i)->listarDatos();
+                this->getAt(i)->limpiarTodo();
+                this->getAt(i)->agregarEspacios(cantidad);
+                //Por cada dato que haya en la lista tenemos que insertarlo en la nueva columna con su nueva tabla hash
+                for (int j = 0; j < this->getAt(i)->sizeListaDatos(); j++){
+                    this->getAt(i)->insertar(this->getAt(i)->getDatoAt(j));
+                }
+                //hay que limpiar la lista de datos que tenemos y proceder con la siguiente columna
+                this->getAt(i)->limpiarListaDatos();
+            }
         }
     }
