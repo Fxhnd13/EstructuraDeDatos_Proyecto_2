@@ -191,7 +191,12 @@ void verGrafico(){
         getAt(i)->escribirEstructura(cadena, noEstructura, noEstructuraPadre);
     }
     cadena += "\n}";
-    
+    ofstream file;
+    file.open("Grafico.dot");
+    file << cadena;
+    file.close();
+    system("dot -Tpng Grafico.dot -o Grafico.png");
+    //system("nohup display Grafico.png")
 }
 
 bool existeTablaAt(int indice){
