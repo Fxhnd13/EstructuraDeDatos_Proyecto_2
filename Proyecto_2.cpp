@@ -11,6 +11,7 @@ int getByName(char[]);
 void first();
 void last();
 void agregarTabla(Tabla *&);
+int size();
 
 void crearTabla();
 void hacerConsulta();
@@ -77,27 +78,56 @@ void hacerConsulta(){
         cout<<"1) Si"<<endl; cout<<"2) No"<<endl; cout<<"Por favor ingrese el número de su decisión"<<endl;
         int busqueda; 
         cin>>busqueda;
-        /*switch(busqueda){
+        switch(busqueda){
             case 1:{
                 Tabla* tabla = getAt(getByName(nombreTabla));
                 cout<<"Eliga una columna para realizar la busqueda: "<<endl;
-                for (int i = 0; i < size(tabla); i++){
+                for (int i = 0; i < tabla->sizeColumnas(); i++){
                     cout<<(i+1)<<") "<<tabla->getAt(i)->getNombre()<<endl;
                 }
                 int columna = -1;
                 cout<<"Por favor ingrese el numero de la opción que desea: "<<endl;
                 cin>>columna;
-                cout<<""<<endl;
-                cout<<"Por favor ingrese el parametro de busqueda: "<<endl;
-                char parametro[300];
-                cin.getline(parametro, 300, '\n');
+                if(columna != (-1)){
+                    cout<<""<<endl;
+                    cout<<"Por favor ingrese el parametro de busqueda: "<<endl;
+                    Dato dato;
+                    switch(tabla->getAt(columna)->getTipo()){
+                        case 1:{
+                            int parametro;
+                            cin>>parametro;
+                            dato.setDatoEntero(parametro);
+                            break;
+                        }
+                        case 2:{
+                            float parametro;
+                            cin>>parametro;
+                            dato.setDatoFlotante(parametro);
+                            break;
+                        }
+                        case 3:{
+                            char parametro[300];
+                            cin.getline(parametro, 300, '\n');
+                            cin.getline(parametro, 300, '\n');
+                            dato.setDatoString(parametro);
+                            break;
+                        }
+                        case 4:{
+                            char parametro;
+                            cin>>parametro;
+                            dato.setDatoChar(parametro);
+                            break;
+                        }
+                    }
+                    getAt(getByName(nombreTabla))->mostrarDatosPorBusqueda(columna, dato);
+                }
                 break;
             }
             case 2:{
                 getAt(getByName(nombreTabla))->mostrarDatos();
                 break;
             }
-        }*/
+        }
     }else{
         cout<<"No existe una tabla con el nombre ingresado."<<endl;
     }
@@ -153,7 +183,7 @@ void insertarDatos(){
 }
 
 void verGrafico(){
-
+    
 }
 
 bool existeTablaAt(int indice){

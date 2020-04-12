@@ -33,14 +33,21 @@ class AVL{
         bool getBorrado();
         void setBorrado(bool);
 
+        //modifica el valor de el entero ingresado al no de registro del dato ingresado
         void getNoRegistroByDato(Dato ,int &);
 
+        //modifica el dato ingresado al dato correspondiente al numero de registro ingresado
         void getDatoByNoRegistro(int , Dato &, bool &);
 
+        //nos dice la cantidad de registros que hay en el arbol
         void cantidadDeRegistros(int &);
 
+        //elimina todos los datos que hay en el arbol
         void limpiarDatos();
 
+        //agrega a la lista enviada como parametro los datos que se encuentre en el arbol
         void listarDatos(ListDatos* &);
+
+        //agrega el dato enviado de parametro a la lista enviada de parametro
         void agregarDato(ListDatos* &, Dato);
 };

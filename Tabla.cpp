@@ -127,53 +127,22 @@ using namespace std;
         }
     }
 
-    void Tabla::mostrarDatosPorBusqueda(int opcion, int columna, Dato dato){
-        if(this->getAt(0)){
-            int cantidadRegistros = 0;
-            this->getAt(0)->cantidadDeRegistros(cantidadRegistros);
-            if(cantidadRegistros == 0){
-                cout<<"No hay registros en la tabla seleccionada."<<endl;
+    void Tabla::mostrarDatosPorBusqueda(int columna, Dato dato){
+        if(this->getAt(columna)){
+            int noRegistro = -1;
+            this->getAt(columna)->getNoRegistroByDato(noRegistro, dato);
+            if(noRegistro = (-1)){
+                cout<<"No hay registros en la tabla con el dato ingresado"<<endl;
             }else{
-                for (int i = 0; i < cantidadRegistros; i++){     
+                for (int j = 0; j < this->sizeColumnas(); j++){
                     Dato aux;  
                     bool encontrado = false;
-                    this->getAt(columna)->getDatoByNoRegistro(i, aux, encontrado);
-                    switch(opcion){
-                        case 0:{
-                            if(aux.getValorNumerico() == dato.getValorNumerico()){
-                                for (int j = 0; j < this->sizeColumnas(); j++){
-                                    cout<<this->getAt(j)->getNombre()<<": ";
-                                    aux.escribirDato();
-                                    if((j+1) < this->sizeColumnas())cout<<"---";
-                                }
-                            }
-                            break;
-                        }
-                        case 1:{
-                            if(aux.getValorNumerico() > dato.getValorNumerico()){
-                                for (int j = 0; j < this->sizeColumnas(); j++){
-                                    cout<<this->getAt(j)->getNombre()<<": ";
-                                    aux.escribirDato();
-                                    if((j+1) < this->sizeColumnas()) cout<<"---";
-                                }
-                            }
-                            break;
-                        }
-                        case 2:{
-                            if(aux.getValorNumerico() < dato.getValorNumerico()){
-                                for (int j = 0; j < this->sizeColumnas(); j++){
-                                    cout<<this->getAt(j)->getNombre()<<": ";
-                                    aux.escribirDato();
-                                    if((j+1) < this->sizeColumnas()) cout<<"---";
-                                }
-                            }
-                            break;
-                        }
-                    }
+                    this->getAt(j)->getDatoByNoRegistro(noRegistro, aux, encontrado);
+                    cout<<this->getAt(j)->getNombre()<<": ";
+                    aux.escribirDato();
+                    if((j+1) < this->sizeColumnas())cout<<"---";
                 }
             }
-        }else{
-            cout<<"No hay tablas ingresadas."<<endl;
         }
     }
 

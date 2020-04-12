@@ -232,12 +232,10 @@ void Columna::getDatoByNoRegistro(int noRegistro, Dato &dato, bool &encontrado){
 }
 
 void Columna::getNoRegistroByDato(int &noRegistro, Dato dato){
-    first();
+    int indice = dato.funcionHash(this->espaciosTotales);
     if(this->tablaHash){
-        tablaHash->getAVL()->getNoRegistroByDato(dato, noRegistro);
-        while(tablaHash->getSig() && (noRegistro==(-1))){
-            tablaHash = tablaHash->getSig();
-            tablaHash->getAVL()->getNoRegistroByDato(dato, noRegistro);
+        if(this->getAt(indice)){
+            this->getAt(indice)->getNoRegistroByDato(dato, noRegistro);
         }
     }
 }

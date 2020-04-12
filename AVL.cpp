@@ -60,9 +60,9 @@ void AVL::getNoRegistroByDato(Dato dato, int &noRegistro){
         }else{
             if(noRegistro == (-1)){
                 if(this->getDato().getValorNumerico() < dato.getValorNumerico()){
-                    //if(this->getDer()) this->getDer()->getNoRegistroByDato(dato, noRegistro);
+                    if(this->getDer()) this->getDer()->getNoRegistroByDato(dato, noRegistro);
                 }else{
-                    //if(this->getIzq()) this->getIzq()->getNoRegistroByDato(dato, noRegistro);
+                    if(this->getIzq()) this->getIzq()->getNoRegistroByDato(dato, noRegistro);
                 }
             }
         }
@@ -76,9 +76,9 @@ void AVL::getDatoByNoRegistro(int noRegistro, Dato &dato, bool &encontrado){
             encontrado = true;
         }else{
             if(!encontrado){
-                //if(this->getDer()) this->getDer()->getDatoByNoRegistro(noRegistro, dato, encontrado);
+                if(this->getDer()) this->getDer()->getDatoByNoRegistro(noRegistro, dato, encontrado);
                 if(!encontrado){
-                    //if(this->getIzq()) this->getIzq()->getDatoByNoRegistro(noRegistro, dato, encontrado);
+                    if(this->getIzq()) this->getIzq()->getDatoByNoRegistro(noRegistro, dato, encontrado);
                 }
             }
         }
