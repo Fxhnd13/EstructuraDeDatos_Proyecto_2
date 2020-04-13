@@ -128,21 +128,21 @@ void Columna::insert(Dato dato, bool &aumento, AVL* &arbol){
             if(aumento){
                 switch(arbol->getFb()){
                     case -1:{
-                        if(arbol->getIzq()->getFb() == 1){
-                            rotarLR(arbol);
-                        }else{
-                            rotarLL(arbol);
-                        }
+                        arbol->setFb(0);
                         aumento = false;
                         break;
                     }
                     case 0:{
-                        arbol->setFb(-1);
-                        aumento = false;
+                        arbol->setFb(1);
+                        aumento = true;
                         break;
                     }
                     case 1:{
-                        arbol->setFb(0);
+                        if (arbol->getIzq()->getFb() == 1){ // Si es 1 necesita una rotacion LL si es -1 necesita una rotacion LR
+                            rotarLL(arbol);
+                        }else{
+                            rotarLR(arbol);
+                        }
                         aumento = false;
                         break;
                     }
@@ -153,24 +153,24 @@ void Columna::insert(Dato dato, bool &aumento, AVL* &arbol){
             if(aumento){
                 switch(arbol->getFb()){
                     case -1:{
-                        arbol->setFb(0);
-                        aumento = false;
-                        break;
-                    }
-                    case 0: {
-                        arbol->setFb(1);
-                        aumento = false;
-                        break;
-                    }
-                    case 1:{
-                        if(arbol->getDer()->getFb()==-1){
-                            rotarRL(arbol);
-                        }else{
-                            rotarRR(arbol);
-                        }
-                        aumento = false;
-                        break;
-                    }
+						if (arbol->getDer()->getFb() == 1){ // Si es 1 necesita una rotacion RL si es -1 necesita una rotacion RR
+							rotarRL(arbol);
+						}else{
+							rotarRR(arbol);
+						}
+						aumento = false;						
+						break;
+					}
+					case 0:{
+						arbol->setFb(-1);
+						aumento = true;
+						break;
+					}
+					case 1:{
+						arbol->setFb(0);
+						aumento = false;
+						break;
+					}
                 }
             }
         }
@@ -306,7 +306,9 @@ Dato Columna::getDatoAt(int indice){
 
     int Columna::sizeListaDatos(){
         int cantidad = 0;
-        this->first();
+        while(this->listDatos && this->listDatos->getAnt()){
+            this->listDatos = this->listDatos->getAnt();
+        }
         ListDatos* aux = this->listDatos;
         if(aux) cantidad++;
         while(aux && aux->getSig()){

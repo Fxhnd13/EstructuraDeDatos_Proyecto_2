@@ -70,7 +70,6 @@ class Columna{
 
         //metodo que inserta el dato en el arbol correspondiente
         void insert(Dato dato, bool &, AVL* &);
-
         //metodo para una rotacion izquierda izquierda
         void rotarLL(AVL* &);
         //metodo para una rotacion derecha derecha
