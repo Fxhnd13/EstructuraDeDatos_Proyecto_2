@@ -217,10 +217,53 @@ void insertarDatos(){
 void verGrafico(){
     int noEstructura = 0;
     int noEstructuraPadre = 0;
-    string cadena = "digraph G {\n     nodesep=.1;\n     rankdir=LR;\n     node"+to_string(noEstructuraPadre)+" [label=\"Guatemala's Database\", shape=record, height=.1];";
-    noEstructura++;
-    for (int i = 0; i < sizeTablas(); i++){
-        if(getAt(i)) getAt(i)->escribirEstructura(cadena, noEstructura, noEstructuraPadre);
+    string cadena = "digraph G {\n     nodesep=.1;\n     rankdir=LR;";
+    cout<<"\nDesea ver toda la base de datos?"<<endl;
+    cout<<"1)Sí"<<endl;
+    cout<<"2)No"<<endl;
+    int select = 0;
+    cin>>select;
+    switch(select){
+        case 1:{
+            cadena+="\n     node"+to_string(noEstructuraPadre)+" [label=\"Guatemala's Database\", shape=record, height=.1];";
+            noEstructura++;
+            for (int i = 0; i < sizeTablas(); i++){
+                if(getAt(i)) getAt(i)->escribirEstructura(cadena, noEstructura, noEstructuraPadre);
+            }
+            break;
+        }
+        case 2:{
+            cout<<""<<endl;
+            for (int i = 0; i < sizeTablas(); i++){
+                cout<<(i+1)<<") "<<getAt(i)->getNombre()<<endl;
+            }
+            cout<<"\nPor favor ingrese el numero de la tabla que desea ver: ";
+            int tabla = 0;
+            cin>>tabla;
+            cout<<"\n¿Desea ver la tabla completa o columna especifica? "<<endl;
+            cout<<"1) Completa"<<endl;
+            cout<<"2) Columna especifica"<<endl;
+            int select2 = 0;
+            cin>>select2;
+            switch(select2){
+                case 1:{
+                    getAt(tabla)->escribirEstructura(cadena, noEstructura, noEstructuraPadre);
+                    break;
+                }
+                case 2:{
+                    cout<<""<<endl;
+                    for (int i = 0; i < getAt(tabla)->sizeColumnas(); i++){
+                        cout<<(i+1)<<") "<<getAt(tabla)->getAt(i)->getNombre()<<endl;
+                    }
+                    cout<<"\nPor favor ingrese el numero de la columna que desea ver: ";
+                    int columna = 0;
+                    cin>>columna;
+                    getAt(tabla)->getAt(columna)->escribirEstructura(cadena, noEstructura, noEstructuraPadre);
+                    break;
+                }
+            }
+            break;
+        }
     }
     cadena += "\n}";
     ofstream file;
