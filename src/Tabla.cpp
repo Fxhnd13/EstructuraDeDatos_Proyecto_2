@@ -109,6 +109,7 @@ using namespace std;
             if(cantidadRegistros == 0){
                 cout<<"No hay registros en la tabla seleccionada."<<endl;
             }else{
+                cout<<""<<endl;
                 for (int i = 1; i <= cantidadRegistros; i++){       
                     for (int j = 0; j < this->sizeColumnas(); j++){
                         Dato dato;
@@ -136,6 +137,7 @@ using namespace std;
             if(sizeListNoRegistro(listNoRegistro)==0){
                 cout<<"\nNo hay registros en la tabla con el dato ingresado"<<endl;
             }else{
+                cout<<""<<endl;
                 for (int i = 0; i < sizeListNoRegistro(listNoRegistro); i++){
                     for (int j = 0; j < this->sizeColumnas(); j++){
                         Dato aux;  

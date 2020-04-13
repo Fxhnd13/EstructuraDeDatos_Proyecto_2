@@ -233,7 +233,7 @@ void verGrafico(){
             break;
         }
         case 2:{
-            cout<<""<<endl;
+            cout<<"\nTablas registradas:"<<endl;
             for (int i = 0; i < sizeTablas(); i++){
                 cout<<(i+1)<<") "<<getAt(i)->getNombre()<<endl;
             }
@@ -251,7 +251,7 @@ void verGrafico(){
                     break;
                 }
                 case 2:{
-                    cout<<""<<endl;
+                    cout<<"\nColumnas registradas en la tabla "<<getAt(tabla)->getNombre()<<endl;
                     for (int i = 0; i < getAt(tabla)->sizeColumnas(); i++){
                         cout<<(i+1)<<") "<<getAt(tabla)->getAt(i)->getNombre()<<endl;
                     }
