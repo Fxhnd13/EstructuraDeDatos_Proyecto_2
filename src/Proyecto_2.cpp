@@ -280,6 +280,7 @@ void reportes(){
     cout<<"2) Cantidad de datos"<<endl;
     cout<<"3) Cantidad de columnas (decia filas pero pues) de un mismo tipo de dato en una tabla"<<endl;
     cout<<"4) Cantidad de todas las filas de todas las tablas"<<endl;
+    cout<<"5) Cantidad de todas las columnas de todas las tablas"<<endl;
     int seleccion;
     cin>>seleccion;
     switch(seleccion){
@@ -347,6 +348,13 @@ void reportes(){
                 }
             }
             break;
+        }
+        case 5:{
+            for (int i = 0; i <  sizeTablas(); i++){
+                if(getAt(i)->getAt(0)){
+                    cout<<"\nCantidad de Columnas en la tabla "<<getAt(i)->getNombre()<<" es de: "<<getAt(i)->sizeColumnas()<<endl;;
+                }
+            }
         }
     }
 }
