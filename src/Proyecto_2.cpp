@@ -141,7 +141,7 @@ void insertarDatos(){
     cin.getline(nombreTabla, 100, '\n');
     cin.getline(nombreTabla, 100, '\n');
     if(getByName(nombreTabla)!=(-1)){
-        Tabla* &tabla = getAt(getByName(nombreTabla));
+        Tabla* tabla = getAt(getByName(nombreTabla));
         for (int i = 0; i < tablas->sizeColumnas(); i++){
             cout<<"Ingrese el valor para "<<tabla->getAt(i)->getNombre()<<":";
             Dato dato;
@@ -162,6 +162,7 @@ void insertarDatos(){
                 }
                 case 3:{
                     char valor[300];
+                    cin.getline(valor, 300, '\n');
                     cin.getline(valor, 300, '\n');
                     dato.setDatoString(valor);
                     dato.setTipoDato(3);
@@ -195,7 +196,8 @@ void insertarDatos(){
                 tabla->getAt(i)->setEspaciosOcupados(0);
                 //Por cada dato que haya en la lista tenemos que insertarlo en la nueva columna con su nueva tabla hash
                 for (int j = 0; j < tabla->getAt(i)->sizeListaDatos(); j++){
-                    tabla->getAt(i)->insertar(tabla->getAt(i)->getDatoAt(j));
+                    tabla->insertar(i,tabla->getAt(i)->getDatoAt(j));
+                    //tabla->getAt(i)->setEspaciosOcupados(tabla->getAt(i)->getEspaciosOcupados()+1);
                 }
                 //hay que limpiar la lista de datos que tenemos y proceder con la siguiente columna
                 tabla->getAt(i)->limpiarListaDatos();

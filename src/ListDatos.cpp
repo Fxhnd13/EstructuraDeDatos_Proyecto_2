@@ -14,7 +14,7 @@ class ListDatos{
 
         ~ListDatos(){}
 
-        Dato& getDato();
+        Dato getDato();
         void setDato(Dato);
 
         ListDatos*& getSig();
@@ -23,7 +23,7 @@ class ListDatos{
         void setAnt(ListDatos*);
 };
 
-Dato& ListDatos::getDato(){
+Dato ListDatos::getDato(){
     return this->dato;
 }
 

@@ -62,24 +62,22 @@ void Columna::agregarEspacios(int cantidad){
     this->espaciosTotales = cantidad;
     for (int i = 0; i < cantidad; i++){
         ListAVL *avl = new ListAVL();
+        avl->setAVL(NULL);
         this->agregarArbol(avl);
     }
 }
 
 void Columna::limpiarTodo(){
-    last();
-    while(tablaHash){
+    while(this->tablaHash && this->tablaHash->getSig()){
+        this->tablaHash = this->tablaHash->getSig();
+    }
+    while(this->tablaHash){
         ListAVL *aux = this->tablaHash;
-        if(aux->getAnt()){
-            if(this->tablaHash->getAVL()){
-                this->tablaHash->getAVL()->limpiarDatos();
-            }
-            this->tablaHash = aux->getAnt();
-            aux->getAnt()->setSig(NULL);
-            aux->setAnt(NULL);
-        }else{
-            this->tablaHash = NULL;
-        }
+        /*if(this->tablaHash->getAVL()){
+            this->tablaHash->getAVL()->limpiarDatos();
+        }*/
+        this->tablaHash = aux->getAnt();
+        if(aux->getAnt()) aux->getAnt()->setSig(NULL);
         delete aux;
     }
 }
@@ -290,7 +288,7 @@ AVL*& Columna::getAt(int indice){
 
 Dato Columna::getDatoAt(int indice){
     while(this->listDatos && this->listDatos->getAnt()){
-        this->listDatos = listDatos->getAnt();
+        this->listDatos = this->listDatos->getAnt();
     }
     if(indice==0){
         return this->listDatos->getDato();

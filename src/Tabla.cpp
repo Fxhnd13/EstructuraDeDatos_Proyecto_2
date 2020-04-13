@@ -122,6 +122,7 @@ using namespace std;
                     }
                 }
             }
+            cout<<"\n"<<endl;
         }else{
             cout<<"No hay tablas ingresadas."<<endl;
         }

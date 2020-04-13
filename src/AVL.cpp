@@ -104,11 +104,11 @@ void AVL::cantidadDeRegistros(int &cantidad){
 }
 
 void AVL::limpiarDatos(){
-    if((this->getDer()) || (this->getIzq())){
+    if(this){
         if(this->getDer()) this->getDer()->limpiarDatos();
-        if(this->getIzq()) this->getDer()->limpiarDatos();
+        if(this->getIzq()) this->getIzq()->limpiarDatos();
+        this->~AVL();
     }
-    if(!(this->getDer()) && !(this->getIzq())) this->~AVL();
 }
 
 void AVL::listarDatos(ListDatos* &listDatos){
