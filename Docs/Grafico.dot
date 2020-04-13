@@ -1,0 +1,31 @@
+digraph G {
+     nodesep=.1;
+     rankdir=LR;
+     node0 [label="Guatemala's Database", shape=record, height=.1];
+     node0 -> node1;
+     node1 [label="comida", shape=record, height=.1];
+     node1 -> node2;
+     node2 [label="nombre", shape=record, height=.1];
+     node2 -> node3;
+     node3 [label="*VACIO*"];
+     node2 -> node4;
+     node4 [label="*VACIO*"];
+     node2 -> node5;
+     node5 [label="hamburguesa"];
+     node2 -> node6;
+     node6 [label="*VACIO*"];
+     node2 -> node7;
+     node7 [label="*VACIO*"];
+     node1 -> node8;
+     node8 [label="precio", shape=record, height=.1];
+     node8 -> node9;
+     node9 [label="*VACIO*"];
+     node8 -> node10;
+     node10 [label="*VACIO*"];
+     node8 -> node11;
+     node11 [label="12.500000"];
+     node8 -> node12;
+     node12 [label="*VACIO*"];
+     node8 -> node13;
+     node13 [label="*VACIO*"];
+}

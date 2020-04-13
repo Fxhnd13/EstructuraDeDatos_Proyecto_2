@@ -208,10 +208,10 @@ using namespace std;
 
     void Tabla::escribirEstructura(string &cadena, int &noEstructura, int noEstructuraPadre){
         cadena += "\n     node"+to_string(noEstructuraPadre)+" -> node"+to_string(noEstructura)+";";
-        cadena += "\n     node"+to_string(noEstructura)+" [label=\""+this->getNombre()+"\", shape=record, height.1];";
+        cadena += "\n     node"+to_string(noEstructura)+" [label=\""+this->getNombre()+"\", shape=record, height=.1];";
         noEstructuraPadre = noEstructura;
         noEstructura++;
         for (int i = 0; i < this->sizeColumnas(); i++){
-            this->getAt(i)->escribirEstructura(cadena, noEstructura, noEstructuraPadre);
+            if(this->getAt(i)) this->getAt(i)->escribirEstructura(cadena, noEstructura, noEstructuraPadre);
         }
     }

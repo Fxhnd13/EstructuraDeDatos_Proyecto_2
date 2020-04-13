@@ -48,11 +48,11 @@ string Dato::getCadenaDato(){
     string valor;
     switch(this->tipo){
         case 1:{
-            valor = this->datoEntero;
+            valor = to_string(this->datoEntero);
             break;
         }
         case 2:{
-            valor = this->datoFloat;
+            valor = to_string(this->datoFloat);
             break;
         }
         case 3:{

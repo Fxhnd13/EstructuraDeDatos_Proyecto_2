@@ -8,7 +8,7 @@ Tabla *tablas;
 int option = 0;
 
 Tabla*& getAt(int);
-int getByName(char[]);
+int getByName(string);
 void first();
 void last();
 void agregarTabla(Tabla *&);
@@ -73,6 +73,7 @@ void crearTabla(){
 void hacerConsulta(){
     cout<<"Por favor ingrese el nombre de la tabla en la que desea hacer la busqueda: "<<endl;
     char nombreTabla[100];
+    cin.getline(nombreTabla, 100, '\n');
     cin.getline(nombreTabla, 100, '\n');
     if(getByName(nombreTabla)!=(-1)){
         cout<<"¿Desea hacer una busqueda precisa?"<<endl;
@@ -162,7 +163,6 @@ void insertarDatos(){
                 case 3:{
                     char valor[300];
                     cin.getline(valor, 300, '\n');
-                    cin.getline(valor, 300, '\n');
                     dato.setDatoString(valor);
                     dato.setTipoDato(3);
                     break;
@@ -189,7 +189,7 @@ void verGrafico(){
     string cadena = "digraph G {\n     nodesep=.1;\n     rankdir=LR;\n     node"+to_string(noEstructuraPadre)+" [label=\"Guatemala's Database\", shape=record, height=.1];";
     noEstructura++;
     for (int i = 0; i < sizeTablas(); i++){
-        getAt(i)->escribirEstructura(cadena, noEstructura, noEstructuraPadre);
+        if(getAt(i)) getAt(i)->escribirEstructura(cadena, noEstructura, noEstructuraPadre);
     }
     cadena += "\n}";
     ofstream file;
@@ -230,7 +230,7 @@ Tabla*& getAt(int indice){
     }
 }
 
-int getByName(char nombre[]){
+int getByName(string nombre){
     first();
     int indice = -1;
     if(tablas && tablas->getNombre()==nombre){

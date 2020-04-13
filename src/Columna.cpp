@@ -109,9 +109,8 @@ void Columna::listarDatos(){
 
 void Columna::insertar(Dato dato){
     int indice = dato.funcionHash(this->espaciosTotales);
-    AVL *arbol = this->getAt(indice);
     bool aumento;
-    insert(dato, aumento, arbol);
+    insert(dato, aumento, this->getAt(indice));
 }
 
 void Columna::insert(Dato dato, bool &aumento, AVL* &arbol){
@@ -129,46 +128,46 @@ void Columna::insert(Dato dato, bool &aumento, AVL* &arbol){
             if(aumento){
                 switch(arbol->getFb()){
                     case -1:{
-                        arbol->setFb(0);
+                        if(arbol->getIzq()->getFb() == 1){
+                            rotarLR(arbol);
+                        }else{
+                            rotarLL(arbol);
+                        }
                         aumento = false;
                         break;
                     }
                     case 0:{
-                        arbol->setFb(1);
-                        aumento = false;
-                        break;
-                    }
-                    case 1:{
-                        if(arbol->getIzq()->getFb() == 1){
-                            rotarLL(arbol);
-                        }else{
-                            rotarLR(arbol);
-                        }
-                        aumento = false;
-                        break;
-                    }
-                }
-            }
-        }else{
-            insert(dato, aumento, arbol);
-            if(aumento){
-                switch(arbol->getFb()){
-                    case -1:{
-                        if(arbol->getDer()->getFb()==1){
-                            rotarRL(arbol);
-                        }else{
-                            rotarRR(arbol);
-                        }
-                        aumento = false;
-                        break;
-                    }
-                    case 0: {
                         arbol->setFb(-1);
                         aumento = false;
                         break;
                     }
                     case 1:{
                         arbol->setFb(0);
+                        aumento = false;
+                        break;
+                    }
+                }
+            }
+        }else{
+            insert(dato, aumento, arbol->getDer());
+            if(aumento){
+                switch(arbol->getFb()){
+                    case -1:{
+                        arbol->setFb(0);
+                        aumento = false;
+                        break;
+                    }
+                    case 0: {
+                        arbol->setFb(1);
+                        aumento = false;
+                        break;
+                    }
+                    case 1:{
+                        if(arbol->getDer()->getFb()==-1){
+                            rotarRL(arbol);
+                        }else{
+                            rotarRR(arbol);
+                        }
                         aumento = false;
                         break;
                     }
@@ -264,13 +263,13 @@ void Columna::agregarArbol(ListAVL* &avl){
 }
 
 void Columna::last(){
-    if(this->tablaHash && this->tablaHash->getSig()){
+    while(this->tablaHash && this->tablaHash->getSig()){
         this->tablaHash = this->tablaHash->getSig();
     }
 }
 
 void Columna::first(){
-    if(this->tablaHash && this->tablaHash->getAnt()){
+    while(this->tablaHash && this->tablaHash->getAnt()){
         this->tablaHash = this->tablaHash->getAnt();
     }
 }
@@ -319,11 +318,17 @@ Dato Columna::getDatoAt(int indice){
 
     void Columna::escribirEstructura(string &cadena, int &noEstructura, int noEstructuraPadre){
         cadena += "\n     node"+to_string(noEstructuraPadre)+" -> node"+to_string(noEstructura)+";";
-        cadena += "\n     node"+to_string(noEstructura)+" [label=\""+this->getNombre()+"\", shape=record, height.1];";
+        cadena += "\n     node"+to_string(noEstructura)+" [label=\""+this->getNombre()+"\", shape=record, height=.1];";
         noEstructuraPadre = noEstructura;
         noEstructura++;
-        for (int i = 0; i < this->sizeArboles(); i++){
-            this->getAt(i)->escribirEstructura(cadena, noEstructura, noEstructuraPadre);
+        for (int i = 0; i < this->espaciosTotales; i++){
+            if(this->getAt(i)){
+                getAt(i)->escribirEstructura(cadena, noEstructura, noEstructuraPadre);
+            }else{
+                cadena += "\n     node"+to_string(noEstructuraPadre)+" -> node"+to_string(noEstructura)+";";
+                cadena += "\n     node"+to_string(noEstructura)+" [label=\"*VACIO*\"];";
+                noEstructura++;
+            }
         }
     }
 
