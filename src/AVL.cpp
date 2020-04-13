@@ -119,8 +119,9 @@ void AVL::listarDatos(ListDatos* &listDatos){
     }
 }
 
-void AVL::agregarNoRegistro(ListNoRegistro*& listNoRegistro, int noRegistro){
+void AVL::agregarNoRegistro(ListNoRegistro* &listNoRegistro, int noRegistro){
     ListNoRegistro *nuevoRegistro = new ListNoRegistro();
+    nuevoRegistro->setNoRegistro(noRegistro);
     if(listNoRegistro==NULL){
         nuevoRegistro->setAnt(NULL);
         nuevoRegistro->setSig(NULL);

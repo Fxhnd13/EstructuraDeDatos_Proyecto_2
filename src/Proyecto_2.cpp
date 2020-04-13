@@ -18,15 +18,17 @@ void crearTabla();
 void hacerConsulta();
 void insertarDatos();
 void verGrafico();
+void reportes();
 
 int main(){
     do{
-        cout<<"Bienvenido a las bases de datos"<<endl;
+        cout<<"\n\nBienvenido a las bases de datos"<<endl;
         cout<<"1) Crear tabla"<<endl;
         cout<<"2) Hacer consulta"<<endl;
         cout<<"3) Insertar datos"<<endl;
         cout<<"4) Ver grafico"<<endl;
-        cout<<"5) Salir"<<endl;
+        cout<<"5) Reportes"<<endl;
+        cout<<"6) Salir"<<endl;
         cin>>option;
         switch(option){
             case 1:{
@@ -45,19 +47,23 @@ int main(){
                 verGrafico();
                 break;
             }
+            case 5:{
+                reportes();
+                break;
+            }
         }
-    }while(option!=5);
+    }while(option!=6);
     return 0;
 }
 
 void crearTabla(){
     Tabla *nuevaTabla = new Tabla();
     char nombre[100];
-    cout<<"Por favor ingrese el nombre de la tabla"<<endl;
+    cout<<"\nPor favor ingrese el nombre de la tabla"<<endl;
     cin.getline(nombre, 100, '\n');
     cin.getline(nombre, 100, '\n');
     nuevaTabla->setNombre(nombre);
-    cout<<"Por favor ingrese la cantidad de columnas que tendrá su tabla: ";
+    cout<<"\nPor favor ingrese la cantidad de columnas que tendrá su tabla: ";
     int columnas;
     cin>>columnas;
     cout<<""<<endl;
@@ -71,26 +77,27 @@ void crearTabla(){
 }
 
 void hacerConsulta(){
-    cout<<"Por favor ingrese el nombre de la tabla en la que desea hacer la busqueda: "<<endl;
+    cout<<"\nPor favor ingrese el nombre de la tabla en la que desea hacer la busqueda: "<<endl;
     char nombreTabla[100];
     cin.getline(nombreTabla, 100, '\n');
     cin.getline(nombreTabla, 100, '\n');
     if(getByName(nombreTabla)!=(-1)){
-        cout<<"¿Desea hacer una busqueda precisa?"<<endl;
-        cout<<"1) Si"<<endl; cout<<"2) No"<<endl; cout<<"Por favor ingrese el número de su decisión"<<endl;
+        cout<<"\n¿Desea hacer una busqueda precisa?"<<endl;
+        cout<<"1) Si"<<endl; cout<<"2) No"<<endl; cout<<"\nPor favor ingrese el número de su decisión"<<endl;
         int busqueda; 
         cin>>busqueda;
         switch(busqueda){
             case 1:{
                 Tabla* tabla = getAt(getByName(nombreTabla));
-                cout<<"Eliga una columna para realizar la busqueda: "<<endl;
+                cout<<"\nEliga una columna para realizar la busqueda: "<<endl;
                 for (int i = 0; i < tabla->sizeColumnas(); i++){
                     cout<<(i+1)<<") "<<tabla->getAt(i)->getNombre()<<endl;
                 }
                 int columna = -1;
-                cout<<"Por favor ingrese el numero de la opción que desea: "<<endl;
+                cout<<"\nPor favor ingrese el numero de la opción que desea: "<<endl;
                 cin>>columna;
                 if(columna != (-1)){
+                    columna--;
                     cout<<""<<endl;
                     cout<<"Por favor ingrese el parametro de busqueda: "<<endl;
                     Dato dato;
@@ -121,6 +128,7 @@ void hacerConsulta(){
                             break;
                         }
                     }
+                    dato.setTipoDato(tabla->getAt(columna)->getTipo());
                     getAt(getByName(nombreTabla))->mostrarDatosPorBusqueda(columna, dato);
                 }
                 break;
@@ -143,7 +151,7 @@ void insertarDatos(){
     if(getByName(nombreTabla)!=(-1)){
         Tabla* tabla = getAt(getByName(nombreTabla));
         for (int i = 0; i < tablas->sizeColumnas(); i++){
-            cout<<"Ingrese el valor para "<<tabla->getAt(i)->getNombre()<<":";
+            cout<<"\nIngrese el valor para "<<tabla->getAt(i)->getNombre()<<":";
             Dato dato;
             switch(tabla->getAt(i)->getTipo()){
                 case 1:{
@@ -220,7 +228,84 @@ void verGrafico(){
     file << cadena;
     file.close();
     system("dot -Tpng \"../Docs/Grafico.dot\" -o \"../Docs/Grafico.png\"");
-    //system("nohup display Docs/Grafico.png")
+    system("nohup display \"../Docs/Grafico.png\"");
+}
+
+void reportes(){
+    cout<<"\n\nBienvenido al menú de Reportes"<<endl;
+    cout<<"1) Cantidad de datos en todas las tablas"<<endl;
+    cout<<"2) Cantidad de datos"<<endl;
+    cout<<"3) Cantidad de columnas (decia filas pero pues) de un mismo tipo de dato en una tabla"<<endl;
+    cout<<"4) Cantidad de todas las filas de todas las tablas"<<endl;
+    int seleccion;
+    cin>>seleccion;
+    switch(seleccion){
+        case 1:{
+            for (int i = 0; i <  sizeTablas(); i++){
+                int total = 0;
+                for (int j = 0; j < getAt(i)->sizeColumnas(); j++){
+                    int cantidad =0;
+                    getAt(i)->getAt(j)->cantidadDeRegistros(cantidad);
+                    cout<<"\nCantidad de datos en la columna "<<getAt(i)->getAt(j)->getNombre()<<" de la tabla "<<getAt(i)->getNombre()<<": "<<cantidad;
+                    total += cantidad;
+                }
+                cout<<"\nCon un total de "<<total<<" de datos en la tabla "<<getAt(i)->getNombre();    
+            }
+            break;
+        }
+        case 2:{
+            int total = 0;
+            for (int i = 0; i <  sizeTablas(); i++){
+                int totalDeTabla = 0;
+                for (int j = 0; j < getAt(i)->sizeColumnas(); j++){
+                    int cantidad =0;
+                    getAt(i)->getAt(j)->cantidadDeRegistros(cantidad);
+                    totalDeTabla += cantidad;
+                }
+                total += totalDeTabla;
+            }
+            cout<<"\nSe han ingresado un total de "<<total<<" datos en la base de datos"<<endl;
+            break;
+        }
+        case 3:{
+            for (int i = 0; i <  sizeTablas(); i++){
+                int cantidadEntero = 0, cantidadFloat=0, cantidadString=0, cantidadChar=0;
+                for (int j = 0; j < getAt(i)->sizeColumnas(); j++){
+                    switch(getAt(i)->getAt(j)->getTipo()){
+                        case 1:{
+                            cantidadEntero++; break;
+                        }
+                        case 2:{
+                            cantidadFloat++; break;
+                        }
+                        case 3:{
+                            cantidadString++; break;
+                        }
+                        case 4:{
+                            cantidadChar++; break;
+                        }
+                    }
+                }
+                cout<<"\nPara la tabla "<<getAt(i)->getNombre()<<": "<<endl;
+                cout<<"Columnas tipo entero: "<<cantidadEntero<<endl;
+                cout<<"Columnas tipo float: "<<cantidadFloat<<endl;
+                cout<<"Columnas tipo string: "<<cantidadString<<endl;
+                cout<<"Columnas tipo Char: "<<cantidadChar<<endl;
+                cout<<""<<endl;
+            }
+            break;
+        }
+        case 4:{
+            for (int i = 0; i <  sizeTablas(); i++){
+                if(getAt(i)->getAt(0)){
+                    int cantidad =0;
+                    getAt(i)->getAt(0)->cantidadDeRegistros(cantidad);
+                    cout<<"\nCantidad de registros/filas en la tabla "<<getAt(i)->getNombre()<<" es de: "<<cantidad;
+                }
+            }
+            break;
+        }
+    }
 }
 
 bool existeTablaAt(int indice){

@@ -49,7 +49,7 @@ using namespace std;
     }
 
     void Tabla::agregarColumna(Columna * &columna){
-        cout<<"Ingrese el nombre que desea tenga la columna: "<<endl;
+        cout<<"\nIngrese el nombre que desea tenga la columna: "<<endl;
         char nombre[100];
         cin.getline(nombre, 100, '\n');
         cin.getline(nombre, 100, '\n');
@@ -109,7 +109,7 @@ using namespace std;
             if(cantidadRegistros == 0){
                 cout<<"No hay registros en la tabla seleccionada."<<endl;
             }else{
-                for (int i = 0; i < cantidadRegistros; i++){       
+                for (int i = 1; i <= cantidadRegistros; i++){       
                     for (int j = 0; j < this->sizeColumnas(); j++){
                         Dato dato;
                         bool encontrado = false;
@@ -120,6 +120,7 @@ using namespace std;
                             if((j+1) < this->sizeColumnas())cout<<"---";
                         }
                     }
+                    cout<<""<<endl;
                 }
             }
             cout<<"\n"<<endl;
@@ -130,10 +131,10 @@ using namespace std;
 
     void Tabla::mostrarDatosPorBusqueda(int columna, Dato dato){
         if(this->getAt(columna)){
-            ListNoRegistro *listNoRegistro = new ListNoRegistro();
+            ListNoRegistro *listNoRegistro = NULL;
             this->getAt(columna)->getListNoRegistroByDato(listNoRegistro, dato);
             if(sizeListNoRegistro(listNoRegistro)==0){
-                cout<<"No hay registros en la tabla con el dato ingresado"<<endl;
+                cout<<"\nNo hay registros en la tabla con el dato ingresado"<<endl;
             }else{
                 for (int i = 0; i < sizeListNoRegistro(listNoRegistro); i++){
                     for (int j = 0; j < this->sizeColumnas(); j++){
@@ -144,6 +145,7 @@ using namespace std;
                         aux.escribirDato();
                         if((j+1) < this->sizeColumnas())cout<<"---";
                     }
+                    cout<<""<<endl;
                 }
                 
             }
