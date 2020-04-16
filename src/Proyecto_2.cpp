@@ -23,6 +23,8 @@ void reportes();
 int main(){
     do{
         cout<<"\n\nBienvenido a las bases de datos"<<endl;
+        cout<<""<<endl;
+        cout<<"0) Limpiar pantalla"<<endl;
         cout<<"1) Crear tabla"<<endl;
         cout<<"2) Hacer consulta"<<endl;
         cout<<"3) Insertar datos"<<endl;
@@ -31,6 +33,10 @@ int main(){
         cout<<"6) Salir"<<endl;
         cin>>option;
         switch(option){
+            case 0:{
+                system("clear");
+                break;
+            }
             case 1:{
                 crearTabla();
                 break;
@@ -53,13 +59,22 @@ int main(){
             }
         }
     }while(option!=6);
+    for (int i = 0; i < sizeTablas(); i++){
+        for (int j = 0; j < getAt(i)->sizeColumnas(); j++){
+            getAt(i)->getAt(j)->limpiarTodo();
+            getAt(i)->getAt(j)->~Columna();
+        }
+        getAt(i)->~Tabla();
+    }
+    
     return 0;
 }
 
 void crearTabla(){
     Tabla *nuevaTabla = new Tabla();
     char nombre[100];
-    cout<<"\nPor favor ingrese el nombre de la tabla"<<endl;
+    system("clear");
+    cout<<"Por favor ingrese el nombre de la tabla"<<endl;
     cin.getline(nombre, 100, '\n');
     cin.getline(nombre, 100, '\n');
     nuevaTabla->setNombre(nombre);
@@ -77,7 +92,8 @@ void crearTabla(){
 }
 
 void hacerConsulta(){
-    cout<<"\nPor favor ingrese el nombre de la tabla en la que desea hacer la busqueda: "<<endl;
+    system("clear");
+    cout<<"Por favor ingrese el nombre de la tabla en la que desea hacer la busqueda: "<<endl;
     char nombreTabla[100];
     cin.getline(nombreTabla, 100, '\n');
     cin.getline(nombreTabla, 100, '\n');
@@ -96,8 +112,8 @@ void hacerConsulta(){
                 int columna = -1;
                 cout<<"\nPor favor ingrese el numero de la opción que desea: "<<endl;
                 cin>>columna;
-                if(columna != (-1)){
-                    columna--;
+                columna--;
+                if(tabla->sizeColumnas() > columna){
                     cout<<""<<endl;
                     cout<<"Por favor ingrese el parametro de busqueda: "<<endl;
                     Dato dato;
@@ -129,13 +145,20 @@ void hacerConsulta(){
                         }
                     }
                     dato.setTipoDato(tabla->getAt(columna)->getTipo());
+                    cout<<"\nResultados de la consulta de la tabla "<<getAt(getByName(nombreTabla))->getNombre()<<": "<<endl;
                     getAt(getByName(nombreTabla))->mostrarDatosPorBusqueda(columna, dato);
+                }else{
+                    cout<<"\nNo existe una tabla en el indice indicado."<<endl;
                 }
                 break;
             }
             case 2:{
+                cout<<"\nResultados de la consulta de la tabla "<<getAt(getByName(nombreTabla))->getNombre()<<": "<<endl;
                 getAt(getByName(nombreTabla))->mostrarDatos();
                 break;
+            }
+            default:{
+                cout<<"\nPor favor ingrese un valor válido."<<endl;
             }
         }
     }else{
@@ -144,7 +167,8 @@ void hacerConsulta(){
 }
 
 void insertarDatos(){
-    cout<<"\nPor favor ingrese el nombre de la tabla en la que desea hacer una inserción: ";
+    system("clear");
+    cout<<"Por favor ingrese el nombre de la tabla en la que desea hacer una inserción: ";
     char nombreTabla[100];
     cin.getline(nombreTabla, 100, '\n');
     cin.getline(nombreTabla, 100, '\n');
@@ -211,10 +235,13 @@ void insertarDatos(){
                 tabla->getAt(i)->limpiarListaDatos();
             }
         }
+    }else{
+        cout<<"\nNo existe una tabla con el nombre ingresado."<<endl;
     }
 }
 
 void verGrafico(){
+    system("clear");
     int noEstructura = 0;
     int noEstructuraPadre = 0;
     string cadena = "digraph G {\n     nodesep=.1;\n     rankdir=LR;";
@@ -275,7 +302,8 @@ void verGrafico(){
 }
 
 void reportes(){
-    cout<<"\n\nBienvenido al menú de Reportes"<<endl;
+    system("clear");
+    cout<<"Bienvenido al menú de Reportes"<<endl;
     cout<<"1) Cantidad de datos en todas las tablas"<<endl;
     cout<<"2) Cantidad de datos"<<endl;
     cout<<"3) Cantidad de columnas (decia filas pero pues) de un mismo tipo de dato en una tabla"<<endl;

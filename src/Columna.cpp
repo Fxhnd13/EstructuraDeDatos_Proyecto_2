@@ -73,9 +73,9 @@ void Columna::limpiarTodo(){
     }
     while(this->tablaHash){
         ListAVL *aux = this->tablaHash;
-        /*if(this->tablaHash->getAVL()){
+        if(this->tablaHash->getAVL()){
             this->tablaHash->getAVL()->limpiarDatos();
-        }*/
+        }
         this->tablaHash = aux->getAnt();
         if(aux->getAnt()) aux->getAnt()->setSig(NULL);
         delete aux;
